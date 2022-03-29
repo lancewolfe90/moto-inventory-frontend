@@ -1,0 +1,10 @@
+<!-- Show an image of the bike -->
+<h2>{{ selectedBike.type }} ({{ selectedBike.make }})</h2>
+<p>{{ selectedBike.id }}</p>
+<br />
+<br />
+<p>VIN: {{ selectedBike.vin }}</p>
+<p>{{ selectedBike.price | currency }}</p>
+<p *ngIf="selectedBike.purchased"><em>SOLD</em></p>
+
+<a routerLink="/inventory">Back to Inventory Page</a>

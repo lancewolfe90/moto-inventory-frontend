@@ -11,7 +11,7 @@ import { VehicleService } from '../vehicle.service';
 })
 export class InventoryComponent implements OnInit {
   filterMethod: string = '';
-  inventory: Bike[] = [];
+  inventory: Bike[] = []; // Will pass specific Bike object as prop to Detail page
   availableMakes = new Set<string>();
   vinField = new FormControl('', [
     Validators.required,

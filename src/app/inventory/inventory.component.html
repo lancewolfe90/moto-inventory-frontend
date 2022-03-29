@@ -1,0 +1,48 @@
+<h2>JSON's Current Inventory</h2>
+
+<mat-button-toggle-group [(ngModel)]="filterMethod">
+  <mat-button-toggle value="vin">VIN search</mat-button-toggle>
+  <mat-button-toggle value="make">Make lookup</mat-button-toggle>
+  <mat-button-toggle value="type">Type lookup</mat-button-toggle>
+</mat-button-toggle-group>
+
+<form #searchForm="ngForm">
+  <div *ngIf="filterMethod === 'vin'">
+    <mat-form-field>
+      <mat-label>Search by VIN</mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="17 alphanumeric characters"
+        [formControl]="vinField"
+        required
+      />
+      <mat-error *ngIf="vinField.invalid">{{ getVinErrorMessage() }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div *ngIf="filterMethod === 'make'">
+    <mat-form-field>
+      <mat-label>Filter by make</mat-label>
+      <mat-select matInput [formControl]="makeField" required>
+        <mat-option *ngFor="let make of availableMakes" [value]="make">
+          {{ make }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="makeField.invalid">{{
+        getMakeErrorMessage()
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div *ngIf="filterMethod === 'type'">
+    <mat-form-field>
+      <mat-label>Search by type</mat-label>
+      <input matInput type="text" [formControl]="typeField" required />
+      <mat-error *ngIf="typeField.invalid">{{
+        getTypeErrorMessage()
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <button (click)="submitSearch($event)">Search</button>
+</form>
+<br />
+Inventory list goes here; item 1 item 2 etc

@@ -1,10 +1,20 @@
 <!-- Show an image of the bike -->
 <h2>{{ selectedBike.type }} ({{ selectedBike.make }})</h2>
-<p>{{ selectedBike.id }}</p>
+<p>{{ selectedBike.bike_id }}</p>
 <br />
 <br />
 <p>VIN: {{ selectedBike.vin }}</p>
 <p>{{ selectedBike.price | currency }}</p>
 <p *ngIf="selectedBike.purchased"><em>SOLD</em></p>
 
-<a routerLink="/inventory">Back to Inventory Page</a>
+<button
+  mat-raised-button
+  *ngIf="!selectedBike.purchased"
+  (click)="markAsSold(selectedBike.bike_id)"
+>
+  Mark as sold
+</button>
+
+<div>
+  <a routerLink="/inventory">Back to Inventory Page</a>
+</div>

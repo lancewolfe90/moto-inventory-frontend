@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Bike } from '../bike.model';
 import { VehicleService } from '../vehicle.service';
 
@@ -9,8 +10,6 @@ import { VehicleService } from '../vehicle.service';
   styleUrls: ['./bike-detail.component.css'],
 })
 export class BikeDetailComponent implements OnInit {
-  paramId: string | null = '';
-  selectedId: number = NaN;
   selectedBike: Bike = {
     vin: '',
     make: '',
@@ -19,27 +18,33 @@ export class BikeDetailComponent implements OnInit {
     purchased: false,
   };
 
-  constructor(
-    private route: ActivatedRoute,
-    private vehicleService: VehicleService
-  ) {}
+  constructor(private router: Router, private vehicleService: VehicleService) {}
 
   ngOnInit(): void {
-    this.paramId = this.route.snapshot.paramMap.get('id');
-    if (this.paramId) {
-      this.selectedId = +this.paramId;
-      this.retrieveBikeDetails();
-    }
+    this.selectedBike = {
+      bike_id: history.state.bike_id,
+      vin: history.state.vin,
+      make: history.state.make,
+      type: history.state.type,
+      price: history.state.price,
+      purchased: history.state.purchased,
+    };
   }
 
-  retrieveBikeDetails() {
-    this.vehicleService.findBike(this.selectedId).subscribe((response) => {
-      console.log('Currently selected bike:', response);
-      if (response.vin) {
-        this.selectedBike = response;
-      } else {
-        // Display user-friendly error message
-      }
-    });
+  markAsSold(id: number | undefined): void {
+    if (id) {
+      let temporarySubscription: Subscription;
+      temporarySubscription = this.vehicleService
+        .sellBike(id)
+        .subscribe((response) => {
+          if (response) {
+            console.log(response);
+          }
+          if (temporarySubscription) {
+            temporarySubscription.unsubscribe();
+          }
+        });
+      this.router.navigate(['inventory']);
+    }
   }
 }

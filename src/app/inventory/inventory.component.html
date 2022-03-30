@@ -45,4 +45,22 @@
   <button (click)="submitSearch($event)">Search</button>
 </form>
 <br />
-Inventory list goes here; item 1 item 2 etc
+<div class="inventory-container" *ngIf="inventory.length > 0">
+  <mat-card
+    *ngFor="let bike of inventory"
+    (click)="navigateToDetail(bike.bike_id)"
+  >
+    <mat-card-title>{{ bike.make }} {{ bike.type }}</mat-card-title>
+    <mat-card-subtitle>{{
+      bike.purchased ? "Sold" : "In stock"
+    }}</mat-card-subtitle>
+    <!-- Display bike image -->
+    <mat-card-content
+      >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus,
+      facere tenetur corrupti hic adipisci sed enim ad doloribus deserunt
+      blanditiis, unde consectetur architecto dolor harum aliquam exercitationem
+      natus, vel rem.</mat-card-content
+    >
+    <mat-card-footer>{{ bike.price | currency }}</mat-card-footer>
+  </mat-card>
+</div>

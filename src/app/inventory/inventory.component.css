@@ -2,3 +2,17 @@
   display: block;
   color: red;
 }
+
+button {
+  margin-top: 1rem;
+}
+
+.inventory-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+mat-card {
+  max-width: 20%;
+  cursor: pointer;
+}

@@ -42,12 +42,14 @@
       }}</mat-error>
     </mat-form-field>
   </div>
-  <button (click)="submitSearch($event)">Search</button>
+  <button (click)="submitSearch()">Search</button>
+  <button (click)="resetSearch()">Display all inventory</button>
 </form>
 <br />
-<div class="inventory-container" *ngIf="inventory.length > 0">
+<!-- Loading indicator and/or "no results found" hint -->
+<div class="inventory-container" *ngIf="bikesToDisplay.length > 0">
   <mat-card
-    *ngFor="let bike of inventory"
+    *ngFor="let bike of bikesToDisplay"
     (click)="navigateToDetail(bike.bike_id)"
   >
     <mat-card-title>{{ bike.make }} {{ bike.type }}</mat-card-title>

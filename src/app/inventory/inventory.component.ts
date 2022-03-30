@@ -12,7 +12,8 @@ import { VehicleService } from '../vehicle.service';
 })
 export class InventoryComponent implements OnInit {
   filterMethod: string = '';
-  inventory: Bike[] = []; // Will pass specific Bike object as prop to Detail page
+  inventory: Bike[] = []; // May need to use async pipe
+  bikesToDisplay: Bike[] = [];
   availableMakes = new Set<string>();
   vinField = new FormControl('', [
     Validators.required,
@@ -49,6 +50,7 @@ export class InventoryComponent implements OnInit {
       .findAllBikes()
       .subscribe((bikes) => {
         this.inventory = bikes;
+        this.bikesToDisplay = [...this.inventory];
         this.populateDropdown();
         if (temporarySubscription) {
           temporarySubscription.unsubscribe();
@@ -64,31 +66,67 @@ export class InventoryComponent implements OnInit {
     });
   }
 
-  submitSearch(ev: Event) {
-    let temporarySubscription: Subscription;
+  // TODO Make search results much more forgiving (e.g., case-insensitive)
+  submitSearch() {
+    // let temporarySubscription: Subscription;
     let searchContent = '';
     switch (this.filterMethod) {
       case 'vin':
         this.vinField.patchValue(this.vinField.value.toUpperCase());
         searchContent = this.vinField.value;
+        let vinSearchResult = this.inventory.find(
+          (bike) => bike.vin === searchContent
+        );
+        if (vinSearchResult) {
+          this.bikesToDisplay = [vinSearchResult];
+        } else {
+          this.bikesToDisplay = [];
+        }
         break;
       case 'make':
         searchContent = this.makeField.value;
+        let makeSearchResults = this.inventory.filter(
+          (bike) => bike.make === searchContent
+        );
+        if (makeSearchResults.length > 0) {
+          this.bikesToDisplay = [...makeSearchResults];
+        } else {
+          this.bikesToDisplay = [];
+        }
         break;
       case 'type':
         searchContent = this.typeField.value;
+        let typeSearchResults = this.inventory.filter(
+          (bike) => bike.type === searchContent
+        );
+        if (typeSearchResults.length > 0) {
+          this.bikesToDisplay = [...typeSearchResults];
+        } else {
+          this.bikesToDisplay = [];
+        }
         break;
       default:
         break;
     }
+    /*
     temporarySubscription = this.vehicleService
       .searchBikesBy(this.filterMethod, searchContent)
       .subscribe((response) => {
-        console.log('Server response:', response);
+        if (response instanceof Array) {
+          this.bikesToDisplay = response;
+        }
         if (temporarySubscription) {
           temporarySubscription.unsubscribe();
         }
       });
+      */
+  }
+
+  resetSearch() {
+    this.vinField.reset();
+    this.makeField.reset();
+    this.typeField.reset();
+    this.bikesToDisplay = [...this.inventory];
   }
 
   navigateToDetail(id: number | undefined): void {

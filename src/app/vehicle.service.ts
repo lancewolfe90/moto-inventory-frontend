@@ -20,6 +20,7 @@ export class VehicleService {
     return this.http.get(apiBaseUrl);
   }
 
+  /*
   searchBikesBy(queryType: string, query: string): Observable<any> {
     const filterOptions = ['vin', 'make', 'type'];
     if (filterOptions.includes(queryType)) {
@@ -28,6 +29,7 @@ export class VehicleService {
       return of([]); // Should never occur
     }
   }
+  */
 
   createBike(newBike: Bike): Observable<any> {
     return this.http.post(apiBaseUrl, newBike);

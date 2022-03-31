@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AddBikeDialogComponent } from '../add-bike-dialog/add-bike-dialog.component';
 import { Bike } from '../bike.model';
 import { VehicleService } from '../vehicle.service';
 
@@ -22,7 +24,15 @@ export class InventoryComponent implements OnInit {
   makeField = new FormControl('', [Validators.required]);
   typeField = new FormControl('', [Validators.required]);
 
-  constructor(private router: Router, private vehicleService: VehicleService) {}
+  constructor(
+    public dialog: MatDialog,
+    private router: Router,
+    private vehicleService: VehicleService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadInventory();
+  }
 
   getVinErrorMessage() {
     if (this.vinField.hasError('required')) {
@@ -40,8 +50,8 @@ export class InventoryComponent implements OnInit {
     return 'You must enter some text to search by';
   }
 
-  ngOnInit(): void {
-    this.loadInventory();
+  addNewBike(): void {
+    this.dialog.open(AddBikeDialogComponent);
   }
 
   loadInventory(): void {
@@ -67,7 +77,7 @@ export class InventoryComponent implements OnInit {
   }
 
   // TODO Make search results much more forgiving (e.g., case-insensitive)
-  submitSearch() {
+  submitSearch(): void {
     // let temporarySubscription: Subscription;
     let searchContent = '';
     switch (this.filterMethod) {
@@ -122,7 +132,7 @@ export class InventoryComponent implements OnInit {
       */
   }
 
-  resetSearch() {
+  resetSearch(): void {
     this.vinField.reset();
     this.makeField.reset();
     this.typeField.reset();

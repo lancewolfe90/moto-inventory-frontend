@@ -13,6 +13,7 @@ button {
 }
 
 mat-card {
+  min-width: 15%;
   max-width: 20%;
   cursor: pointer;
 }

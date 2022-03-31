@@ -1,10 +1,14 @@
 <h2>JSON's Current Inventory</h2>
 
+<!-- TODO Implement "add new bike" feature -->
+
 <mat-button-toggle-group [(ngModel)]="filterMethod">
   <mat-button-toggle value="vin">VIN search</mat-button-toggle>
   <mat-button-toggle value="make">Make lookup</mat-button-toggle>
   <mat-button-toggle value="type">Type lookup</mat-button-toggle>
 </mat-button-toggle-group>
+
+<button mat-button (click)="addNewBike()">Add new bike to inventory</button>
 
 <form #searchForm="ngForm">
   <div *ngIf="filterMethod === 'vin'">

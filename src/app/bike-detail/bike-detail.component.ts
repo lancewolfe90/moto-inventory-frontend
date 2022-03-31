@@ -65,9 +65,9 @@ export class BikeDetailComponent implements OnInit {
           }
           if (temporarySubscription) {
             temporarySubscription.unsubscribe();
+            this.router.navigate(['inventory']);
           }
         });
-      this.router.navigate(['inventory']);
     }
   }
 

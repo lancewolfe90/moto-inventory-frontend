@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -19,9 +20,15 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InventoryComponent } from './inventory/inventory.component';
 import { BikeDetailComponent } from './bike-detail/bike-detail.component';
+import { AddBikeDialogComponent } from './add-bike-dialog/add-bike-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, InventoryComponent, BikeDetailComponent],
+  declarations: [
+    AppComponent,
+    InventoryComponent,
+    BikeDetailComponent,
+    AddBikeDialogComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,6 +47,7 @@ import { BikeDetailComponent } from './bike-detail/bike-detail.component';
     MatCardModule,
     MatButtonModule,
     MatSlideToggleModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

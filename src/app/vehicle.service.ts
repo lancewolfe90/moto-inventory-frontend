@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Bike } from './bike.model';
 
-// const apiBaseUrl = 'http://localhost:8080/api/bikes';
-const apiBaseUrl = 'https://jsons-bikes.herokuapp.com/api/bikes';
+const apiBaseUrl = 'http://localhost:8080/api/bikes';
+// const apiBaseUrl = 'https://jsons-bikes.herokuapp.com/api/bikes';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +36,7 @@ export class VehicleService {
   }
 
   updateBike(bikeId: number, updatedBike: Bike): Observable<any> {
+    updatedBike.vin = updatedBike.vin.toUpperCase();
     return this.http.put(`${apiBaseUrl}/${bikeId}`, updatedBike);
   }
 

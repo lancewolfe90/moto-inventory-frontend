@@ -17,6 +17,7 @@ export class BikeDetailComponent implements OnInit {
     price: NaN,
     purchased: false,
   };
+  editingMode = false;
 
   constructor(private router: Router, private vehicleService: VehicleService) {}
 
@@ -31,6 +32,45 @@ export class BikeDetailComponent implements OnInit {
     };
   }
 
+  toggleEditingMode() {
+    this.editingMode = !this.editingMode;
+  }
+
+  saveEdits() {
+    let temporarySubscription: Subscription;
+    if (this.selectedBike.bike_id) {
+      temporarySubscription = this.vehicleService
+        .updateBike(this.selectedBike.bike_id, this.selectedBike)
+        .subscribe((response) => {
+          if (response) {
+            console.log(response);
+            this.editingMode = false;
+          }
+          if (temporarySubscription) {
+            temporarySubscription.unsubscribe();
+          }
+        });
+    }
+  }
+
+  deleteBike(id: number | undefined) {
+    // Confirmation prompt/warning
+    if (id) {
+      let temporarySubscription: Subscription;
+      temporarySubscription = this.vehicleService
+        .destroyBike(id)
+        .subscribe((response) => {
+          if (response) {
+            console.log(response);
+          }
+          if (temporarySubscription) {
+            temporarySubscription.unsubscribe();
+          }
+        });
+      this.router.navigate(['inventory']);
+    }
+  }
+
   markAsSold(id: number | undefined): void {
     if (id) {
       let temporarySubscription: Subscription;
@@ -42,9 +82,9 @@ export class BikeDetailComponent implements OnInit {
           }
           if (temporarySubscription) {
             temporarySubscription.unsubscribe();
+            this.router.navigate(['inventory']);
           }
         });
-      this.router.navigate(['inventory']);
     }
   }
 }

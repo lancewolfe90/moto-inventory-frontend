@@ -1,18 +1,60 @@
-<!-- Show an image of the bike -->
-<h2>{{ selectedBike.type }} ({{ selectedBike.make }})</h2>
-<p>{{ selectedBike.bike_id }}</p>
-<br />
-<br />
-<p>VIN: {{ selectedBike.vin }}</p>
-<p>{{ selectedBike.price | currency }}</p>
-<p *ngIf="selectedBike.purchased"><em>SOLD</em></p>
+<div *ngIf="!editingMode">
+  <!-- Show an image of the bike -->
+  <h2>{{ selectedBike.type }} ({{ selectedBike.make }})</h2>
+  <p>{{ selectedBike.bike_id }}</p>
+  <br />
+  <br />
+  <p>VIN: {{ selectedBike.vin }}</p>
+  <p>{{ selectedBike.price | currency }}</p>
+  <p *ngIf="selectedBike.purchased"><em>SOLD</em></p>
+</div>
 
+<div *ngIf="editingMode">
+  <form #editBikeForm="ngForm">
+    <input
+      type="text"
+      name="make"
+      placeholder="Edit make"
+      [(ngModel)]="selectedBike.make"
+    />
+    <input
+      type="text"
+      name="type"
+      placeholder="Edit type"
+      [(ngModel)]="selectedBike.type"
+    />
+    <input
+      type="text"
+      name="vin"
+      placeholder="Edit VIN"
+      [(ngModel)]="selectedBike.vin"
+    />
+    <input
+      type="number"
+      name="price"
+      placeholder="Edit price"
+      [(ngModel)]="selectedBike.price"
+    />
+    <mat-slide-toggle name="purchased" [(ngModel)]="selectedBike.purchased"
+      >Purchased?</mat-slide-toggle
+    >
+    <button (click)="saveEdits()">Save changes</button>
+    <button (click)="toggleEditingMode()">Cancel</button>
+  </form>
+</div>
+
+<button mat-raised-button (click)="toggleEditingMode()">
+  Update item record
+</button>
 <button
   mat-raised-button
-  *ngIf="!selectedBike.purchased"
+  *ngIf="!selectedBike.purchased && !editingMode"
   (click)="markAsSold(selectedBike.bike_id)"
 >
   Mark as sold
+</button>
+<button mat-raised-button (click)="deleteBike(selectedBike.bike_id)">
+  Remove item record
 </button>
 
 <div>

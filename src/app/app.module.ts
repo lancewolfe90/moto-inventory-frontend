@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -38,6 +39,7 @@ import { BikeDetailComponent } from './bike-detail/bike-detail.component';
     MatSelectModule,
     MatCardModule,
     MatButtonModule,
+    MatSlideToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

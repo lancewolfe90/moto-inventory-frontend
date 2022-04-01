@@ -10,10 +10,12 @@ button {
 .inventory-container {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 mat-card {
   min-width: 15%;
   max-width: 20%;
   cursor: pointer;
+  margin: 5px;
 }
